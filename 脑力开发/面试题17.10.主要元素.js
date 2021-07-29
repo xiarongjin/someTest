@@ -9,4 +9,7 @@ var majorityElement = function (nums = [1, 2, 5, 9, 5, 9, 5, 5, 5]) {
 
   return ma[0][1] > nums.length / 2 ? ma[0][0] : -1;
 };
+
+//学习rebase
+//第二次提交看看那？？
 console.log(majorityElement());
