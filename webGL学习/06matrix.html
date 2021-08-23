@@ -14,7 +14,7 @@
     canvas {
       width: 80vw;
       height: 80vh;
-      margin: 10vh 10vw;
+      /* margin: 10vh 10vw; */
       display: block;
     }
 
@@ -40,21 +40,12 @@
   </div>
   <script id="vertex" type="x-shader/x-vertex">
     attribute vec2 a_position;
-
-    uniform vec2 u_resolution;
-
+ 
     uniform mat3 u_matrix;
-
-    void main(){
-      vec2 position = (u_matrix * vec3(a_position,1.0)).xy;
-
-      vec2 zeroToOne = position / u_resolution;
-
-      vec2 zeroToTwo = zeroToOne * 2.0;
-
-      vec2 clipSpace = zeroToTwo - 1.0;
-
-      gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+    
+    void main() {
+      // 使位置和矩阵相乘
+      gl_Position = vec4((u_matrix * vec3(a_position, 1)).xy, 0, 1);
     }
   </script>
   <script id="fragment" type="x-shader/x-vertex">
@@ -193,6 +184,8 @@
       gl.uniform4fv(colorLocation, color);
 
       // Compute the matrices
+      var projectMatrix = m3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight)
+
       var translationMatrix = m3.translation(translation[0], translation[1]);
       var rotationMatrix = m3.rotation(angleInRadians);
       var scaleMatrix = m3.scaling(scale[0], scale[1]);
@@ -201,9 +194,10 @@
       var moveOriginMatrix = m3.translation(-50, -75);
 
       // Multiply the matrices.
-      var matrix = m3.multiply(translationMatrix, rotationMatrix);
+      var matrix = m3.multiply(projectMatrix, rotationMatrix);
       matrix = m3.multiply(matrix, scaleMatrix);
       matrix = m3.multiply(matrix, moveOriginMatrix);
+      matrix = m3.multiply(matrix, translationMatrix)
 
       // Set the matrix.
       gl.uniformMatrix3fv(matrixLocation, false, matrix);
@@ -218,7 +212,14 @@
   }
 
   var m3 = {
-
+    projection: function (width, height) {
+      // 注意：这个矩阵翻转了 Y 轴，所以 0 在上方
+      return [
+        2 / width, 0, 0,
+        0, -2 / height, 0,
+        -1, 1, 1
+      ];
+    },
 
     translation: function (tx, ty) {
       return [
