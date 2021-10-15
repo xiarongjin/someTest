@@ -5,7 +5,7 @@ const webpack = require("webpack");
 module.exports = {
   mode: "development",
   entry: {
-    main: "./src/index.js",
+    index: "./src/index.js",
   },
   devtool: "inline-source-map",
   plugins: [
@@ -14,9 +14,22 @@ module.exports = {
     }),
   ],
   output: {
-    filename: "main.[hash].js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
+  },
+  optimization: {
+    runtimeChunk: "single",
+    moduleIds: "deterministic",
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
   },
   devServer: {
     static: "./dist",
