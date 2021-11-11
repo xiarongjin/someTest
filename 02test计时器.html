@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .clock {
+      width: 400px;
+      height: 400px;
+    }
+
+    #num {
+      width: 200px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clock">
+    <div id="num">09:00</div>
+  </div>
+
+</body>
+<script>
+  const num = document.getElementById('num');
+
+  function initTimer(params, startTime, endTime) {
+    let count = startTime * 60;
+    let endTime2 = endTime * 60 - 1;
+    timer = setInterval(() => {
+      count++;
+      console.log(secondsFormat(count))
+      params.innerText = `${secondsFormat(count)}`;
+      if (count > endTime2) {
+        clearInterval(timer)
+      }
+    }, 10);
+
+    function secondsFormat(sec) {
+      let hour = Math.floor(sec / 3600);
+      let minute = Math.floor((sec - hour * 3600) / 60);
+      let second = sec - hour * 3600 - minute * 60;
+      if (minute < 10) {
+        minute = "0" + minute;
+      }
+      if (second < 10) {
+        second = "0" + second;
+      }
+      return minute + ":" + second;
+    }
+
+  }
+
+
+
+  initTimer(num, 6, 24)
+</script>
+
+</html>

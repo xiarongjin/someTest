@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 800px;
+            width: 100%;
+            border: 1px solid red;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .red {
+            background: red;
+            width: 0px;
+            height: 100px;
+            margin: auto;
+            text-align: center;
+            animation: width 5s ease forwards;
+        }
+        
+        .text {
+            border: 1px solid white;
+            width: 100px;
+            height: 100px;
+            margin-left: -50px;
+            text-align: center;
+            animation: margin 5s ease forwards;
+            ;
+        }
+        
+        @keyframes width {
+            0% {
+                width: 0px;
+            }
+            100% {
+                width: 100px;
+            }
+        }
+        
+        @keyframes margin {
+            0% {
+                margin-left: -50px;
+            }
+            100% {
+                margin-left: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1">
+        <div class="red">
+            <div class="text">红盒子</div>
+        </div>
+    </div>
+    <div id="box2" class="box2">
+
+    </div>
+    <div class="box3">第三部分</div>
+    <div></div>
+</body>
+<script>
+    let box2 = document.getElementById('box2');
+    let redBox = document.querySelector('.red')
+
+    // function getMouse(e) {
+    //     console.log(window.pageYOffset, document.documentElement.scrollTop, box2.offsetTop)
+    //     if (window.pageYOffset > 1600) {
+
+    //     }
+    //     if (e.pageY > 800 && e.pageY < 1600) {
+    //         box2.style.cursor = 'none';
+    //     } else {
+
+    //     }
+    // }
+
+    // function showRed(params) {
+    //     console.log(window.scrollY, box2.offsetTop);
+    //     if (window.scrollY > box2.offsetTop && window.scrollY < box2.offsetTop + box2.offsetHeight) {
+    //         redBox.style.opacity = 1
+    //     } else {
+    //         redBox.style.opacity = 0
+    //     }
+    // }
+    // window.addEventListener('scroll', showRed);
+</script>
+
+</html>
